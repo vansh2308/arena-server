@@ -9,10 +9,21 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async getAllUsers(): Promise<User[]> {
-    const users = await this.usersService.getAllUsers();
-    return users;
+  getAllUsers(): string {
+    return "Hare krisna";
   }
+
+  // async getAllUsers(): Promise<string> {
+    // return "hare krisna";
+    // const users = await this.usersService.getAllUsers();
+    // return users;
+  // }
+
+  // @Get()
+  // async getAllUsers(): Promise<User[]> {
+  //   const users = await this.usersService.getAllUsers();
+  //   return users;
+  // }
 
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<User> {

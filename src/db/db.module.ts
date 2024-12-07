@@ -11,14 +11,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get('DATABASE_HOST'),
-
-        // WIP: Add parseInt to env 
-        port: 3306,
+        port: configService.get('DATABASE_PORT'),
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_DB'),
         autoLoadEntities: true,
         synchronize: true,
+        retryAttempts: 5,
       }),
     }),
   ],

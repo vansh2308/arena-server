@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './db/db.module';
+import { AuthModule } from './auth/auth.module';
 import * as Joi from '@hapi/joi';
 
 const configOptions = {
@@ -26,6 +27,8 @@ const configOptions = {
     }),
 
     DatabaseModule,
+
+    AuthModule,
   ],
 
   controllers: [],
