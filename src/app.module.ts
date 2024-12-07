@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseModule } from './db/db.module';
+import * as Joi from '@hapi/joi';
 
 const configOptions = {
   isGlobal: true,
@@ -10,22 +12,22 @@ const configOptions = {
 
 @Module({
   imports: [
-    ConfigModule.forRoot(configOptions),
-    TypeOrmModule.forRoot({
-        type: 'mysql',
-        host: process.env.DATABASE_HOST,
-      
-        // WIP: Add parseInt to env 
-        port: 3306,
-        username: process.env.DATABASE_USERNAME,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_DB,
-        entities: [],
-        synchronize: true,
-      }
-      ),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.development', '.env'],
+      validationSchema: Joi.object({
+        DATABASE_HOST: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+        DATABASE_USERNAME: Joi.string().required(),
+        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_DB: Joi.string().required(),
+        PORT: Joi.number(),
+      }),
+    }),
+
+    DatabaseModule,
   ],
-  
+
   controllers: [],
   providers: [],
 })
