@@ -3,7 +3,7 @@ import { StagesService } from './stages.service';
 import { CreateStageDto } from './dto/create-stage.dto';
 import { UpdateStageDto } from './dto/update-stage.dto';
 
-@Controller('stages')
+@Controller('/api/stages')
 export class StagesController {
   constructor(private readonly stagesService: StagesService) {}
 
