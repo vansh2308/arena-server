@@ -1,14 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { StagesService } from './stages.service';
-import { CreateStageDto } from './dto/create-stage.dto';
-import { UpdateStageDto } from './dto/update-stage.dto';
 
 @Controller('/api/stages')
 export class StagesController {
   constructor(private readonly stagesService: StagesService) {}
 
   @Post()
-  create(@Body() createStageDto: CreateStageDto) {
+  create(@Body() createStageDto: any) {
     return this.stagesService.create(createStageDto);
   }
 
@@ -19,16 +17,16 @@ export class StagesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.stagesService.findOne(+id);
+    return this.stagesService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStageDto: UpdateStageDto) {
-    return this.stagesService.update(+id, updateStageDto);
+  @Post(':id/like')
+  likeStage(@Param('id') id: string, @Body() body: { user_id: string }) {
+    return this.stagesService.likeStage(id, body.user_id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stagesService.remove(+id);
+  @Post(':id/repost')
+  repostStage(@Param('id') id: string, @Body() body: { user_id: string; message: string }) {
+    return this.stagesService.repostStage(id, body.user_id, body.message);
   }
 }

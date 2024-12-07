@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateStageDto } from './create-stage.dto';
-
-export class UpdateStageDto extends PartialType(CreateStageDto) {}
+export class UpdateStageDto {
+    readonly stage_name?: string;
+    readonly host_user_id?: string;
+    readonly scheduled_time?: string;
+    readonly status?: string;
+}
+  
