@@ -9,14 +9,14 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
 
-  @Post('/api/signup')
+  @Post('/signup')
   signUp(@Body() signUpDto: SignUpDto): Promise<{ access_token: string, 
     refresh_token: string }> {
     return this.authService.signUp(signUpDto);
     
   }
 
-  @Post('/api/login')
+  @Post('/login')
   login(@Body() loginDto: LoginDto): Promise<{ 
     access_token: string, 
     refresh_token: string, 
@@ -26,7 +26,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @Post('refresh')
+  @Post('/refresh')
   async refreshToken(@Body('refresh_token') refreshToken: string) {
     return this.authService.refreshToken(refreshToken);
   }
