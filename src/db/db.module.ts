@@ -9,15 +9,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres',
         host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
+        port: parseInt(configService.get('DATABASE_PORT')),
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_DB'),
         autoLoadEntities: true,
         synchronize: true,
         retryAttempts: 5,
+        // entities: [User]
       }),
     }),
   ],

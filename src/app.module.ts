@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './db/db.module';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import * as Joi from '@hapi/joi';
+// import { UsersModule } from './users/user.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
 
-const configOptions = {
-  isGlobal: true,
-  envFilePath: ['.env.development', '.env']
-}
 
 
 @Module({
@@ -23,16 +23,17 @@ const configOptions = {
         DATABASE_PASSWORD: Joi.string().required(),
         DATABASE_DB: Joi.string().required(),
         PORT: Joi.number(),
+        JWT_SECRET: Joi.string().required()
       }),
     }),
 
     DatabaseModule,
 
-    AuthModule,
+    UsersModule,
   ],
 
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 
 export class AppModule {}

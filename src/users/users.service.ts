@@ -1,8 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import { CreateUserDto } from './dtos/user.dto';
+import User from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 export class UsersService {
   constructor(
@@ -15,10 +15,10 @@ export class UsersService {
     return users;
   }
 
-  async getUserById(id: number) {
+  async getUserById(username: string) {
     const user = await this.usersRepository.findOne({
       where: {
-        id: id,
+        username: username,
       },
     });
     if (user) {
@@ -36,10 +36,10 @@ export class UsersService {
     return newUser;
   }
 
-  async deleteById(id: number) {
+  async deleteById(username: string) {
     const user = await this.usersRepository.findOne({
       where: {
-        id: id,
+        username: username,
       },
     });
     if (!user) {

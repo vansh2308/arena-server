@@ -1,46 +1,36 @@
 import { Body, Controller, Get, Param, Post, Delete, UseGuards } from '@nestjs/common';
+import User from './user.entity';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from './user.entity';
-import { CreateUserDto } from './dtos/user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  getAllUsers(): string {
-    return "Hare krisna";
+  async getAllUsers(): Promise<User[]> {
+    const users = await this.usersService.getAllUsers();
+    return users;
   }
 
-  // async getAllUsers(): Promise<string> {
-    // return "hare krisna";
-    // const users = await this.usersService.getAllUsers();
-    // return users;
-  // }
-
-  // @Get()
-  // async getAllUsers(): Promise<User[]> {
-  //   const users = await this.usersService.getAllUsers();
-  //   return users;
-  // }
-
-  @Get(':id')
-  async getUserById(@Param('id') id: string): Promise<User> {
-    const user = await this.usersService.getUserById(Number(id));
+  @Get(':username')
+  async getUserById(@Param('username') username: string): Promise<User> {
+    const user = await this.usersService.getUserById(username);
     return user;
   }
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
+  // WIP: @UseGuards(AuthGuard('jwt'))
+  // WIP: encrypt password
   async createUser(@Body() createUserDto: CreateUserDto) {
     const newUser = await this.usersService.createUser(createUserDto);
     return newUser;
   }
 
-  @Delete(':id')
-  async deleteById(@Param('id') id: string): Promise<User> {
-    const user = this.usersService.deleteById(Number(id));
+  @Delete(':username')
+  async deleteById(@Param('username') username: string): Promise<User> {
+    const user = this.usersService.deleteById(username);
     return user;
   }
 }
