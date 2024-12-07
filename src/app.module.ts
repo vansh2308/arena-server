@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { StagesModule } from './stages/stages.module';
 
 
 @Module({
@@ -37,6 +38,7 @@ import { APP_GUARD } from '@nestjs/core';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    StagesModule,
   ],
 
   controllers: [AppController],
